@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BowlingHallManagement.Services
+namespace BowlingHallManagement.Services.Interfaces
 {
-    class IdataStorage_for_data_sorting_
+    class IMatchService
     {
     }
 }

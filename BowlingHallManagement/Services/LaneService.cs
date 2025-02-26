@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BowlingHallManagement.Services
 {
-    class MatchService_for_match_operations_
+    class LaneService
     {
     }
 }

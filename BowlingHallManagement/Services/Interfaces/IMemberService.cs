@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BowlingHallManagement.Services
+namespace BowlingHallManagement.Services.Interfaces
 {
-    class MemeberService_for_member_operastions_
+    class IMemberService
     {
     }
 }
