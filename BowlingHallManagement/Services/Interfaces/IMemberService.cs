@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BowlingHallManagement.Models;
 
 namespace BowlingHallManagement.Services.Interfaces
 {
-    class IMemberService
+    /// <summary>
+    /// Interface for member-related operations
+    /// </summary>
+    public interface IMemberService
     {
+        void RegisterMember(string name, string email);
+        List<Member> GetAllMembers();
+        Member GetMemberById(int id);
     }
 }

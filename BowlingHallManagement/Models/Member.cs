@@ -1,8 +1,4 @@
-﻿using System;
-
-
-
-namespace BowlingHallManagement.Models
+﻿namespace BowlingHallManagement.Models
 {
     public class Member
     {

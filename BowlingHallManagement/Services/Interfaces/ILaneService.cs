@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BowlingHallManagement.Models;
 
 namespace BowlingHallManagement.Services.Interfaces
 {
-    class ILaneService
+    /// <summary>
+    /// Interface for lane-related operations
+    /// </summary>
+    public interface ILaneService
     {
+        Lane GetLaneByNumber(int laneNumber);
+        List<Lane> GetAllLanes();
+        List<Lane> GetAvailableLanes();
+        void AddLane(Lane lane);
+        void UpdateLaneStatus(int laneNumber, bool isAvailable);
     }
 }

@@ -1,9 +1,4 @@
 ﻿using BowlingHallManagement.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BowlingHallManagement.Factories
 {
@@ -17,13 +12,11 @@ namespace BowlingHallManagement.Factories
         /// <returns>A new Lane object</returns>
         public static Lane CreateLane(int laneNumber)
         {
-            // Validate lane number
             if (laneNumber <= 0)
             {
                 throw new ArgumentException("Lane number must be positive", nameof(laneNumber));
             }
             
-            // Create the lane
             return new Lane(laneNumber);
         }
         
