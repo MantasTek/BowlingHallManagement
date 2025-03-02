@@ -1,19 +1,16 @@
-﻿using System;
-using BowlingHallManagement.Models;
+﻿using BowlingHallManagement.Models;
 
 namespace BowlingHallManagement.Factories
 {
     /*
      * Factory Pattern Implementation for Match
      */
-
     public class MatchFactory
     {
         private static int nextId = 1;
 
         public static Match CreateMatch(Member player1, Member player2, Lane lane)
         {
-            //Validating inputs
             if (player1 == null || player2 == null)
                 throw new ArgumentException("Both players must be members");
 

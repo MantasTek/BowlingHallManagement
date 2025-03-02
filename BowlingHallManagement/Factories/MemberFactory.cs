@@ -1,7 +1,4 @@
 ﻿using BowlingHallManagement.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BowlingHallManagement.Factories
 {
@@ -11,14 +8,11 @@ namespace BowlingHallManagement.Factories
      * The Factory Pattern is a creational design pattern that provides an interface
      * for creating objects without specifying their concrete classes.
     */
-    
     public class MemberFactory
     {
         private static int nextId =1;
-
         public static Member CreateMember(string name, string email)
         {
-            //Validating inputs
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("This Field cannot be empty");
 

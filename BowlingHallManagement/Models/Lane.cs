@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BowlingHallManagement.Models
+﻿namespace BowlingHallManagement.Models
 {
-    /// <summary>
-    /// Represents a bowling lane in the hall
-    /// </summary>
     public class Lane
     {
         public int LaneNumber { get; set; }
@@ -22,9 +13,6 @@ namespace BowlingHallManagement.Models
             ReservedUntil = null;
         }
         
-        /// <summary>
-        /// Reserves the lane for a specified duration
-        /// </summary>
         public void Reserve(TimeSpan duration)
         {
             if (!IsAvailable)
@@ -36,18 +24,12 @@ namespace BowlingHallManagement.Models
             ReservedUntil = DateTime.Now.Add(duration);
         }
         
-        /// <summary>
-        /// Releases the lane reservation
-        /// </summary>
         public void Release()
         {
             IsAvailable = true;
             ReservedUntil = null;
         }
         
-        /// <summary>
-        /// Updates the lane availability status based on current time
-        /// </summary>
         public void UpdateAvailability()
         {
             if (!IsAvailable && ReservedUntil.HasValue && DateTime.Now > ReservedUntil.Value)
@@ -62,4 +44,3 @@ namespace BowlingHallManagement.Models
         }
     }
 }
-

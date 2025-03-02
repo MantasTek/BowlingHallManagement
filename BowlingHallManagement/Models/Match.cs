@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace BowlingHallManagement.Models
+﻿namespace BowlingHallManagement.Models
 {
     public class Match
     {
@@ -14,7 +11,7 @@ namespace BowlingHallManagement.Models
         public int ScorePlayer2 { get; set; }
         public Member? Winner { get; private set; }
         public bool IsComplete { get; private set; }
-        public TimeSpan Durattion { get; set; } = TimeSpan.FromHours(1);// Default duration is 1 hour
+        public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1);// Default duration is 1 hour
 
         public Match(int id, Member player1, Member player2, Lane lane)
         {
@@ -25,8 +22,7 @@ namespace BowlingHallManagement.Models
             Date = DateTime.Now;
             IsComplete = false;
 
-            // Reserve the lane for the match duration
-            Lane.Reserve(Durattion);
+            Lane.Reserve(Duration);
         }
 
         public void RecordScores(int scorePlayer1, int scorePlayer2)
@@ -35,7 +31,6 @@ namespace BowlingHallManagement.Models
             ScorePlayer2 = scorePlayer2;
             DetermineWinner();
 
-            // Release the lane after the match is complete
             Lane.Release();
         }
 

@@ -1,7 +1,14 @@
-﻿namespace BowlingHallManagement
+﻿using BowlingHallManagement.UI;
+
+namespace BowlingHallManagement
 {
-    internal class Program
+    class Program
     {
-       
+        static void Main(string[] args)
+        {
+            // Create and run the console UI
+            var ui = new ConsoleUI();
+            ui.Run();
+        }
     }
 }
