@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using BowlingHallManagement.Models;
 using BowlingHallManagement.Services;
 using BowlingHallManagement.Services.Interfaces;
+using BowlingHallManagement.Services.Logging;
 
 namespace BowlingHallManagement.UI
 {
@@ -10,6 +12,7 @@ namespace BowlingHallManagement.UI
     {
         private readonly IMemberService _memberService;
         private readonly IMatchService _matchService;
+        private readonly SingletonLogger _logger;
 
         public ConsoleUI()
         {
@@ -17,6 +20,9 @@ namespace BowlingHallManagement.UI
             var dataStorage = DataStorage.Instance;
             _memberService = new MemberService(dataStorage);
             _matchService = new MatchService(dataStorage);
+            _logger = SingletonLogger.Instance;
+            
+            _logger.Log("ConsoleUI initialized");
         }
 
         public ConsoleUI(IMemberService memberService, IMatchService matchService)
@@ -24,14 +30,14 @@ namespace BowlingHallManagement.UI
             // Constructor for dependency injection (useful for testing)
             _memberService = memberService ?? throw new ArgumentNullException(nameof(memberService));
             _matchService = matchService ?? throw new ArgumentNullException(nameof(matchService));
+            _logger = SingletonLogger.Instance;
         }
 
         public void Run()
         {
             var menuItems = new List<string>
             {
-                "=== Welcome to Bowling Hall! ===",
-                "Please enter a number to select an option:",
+                "=== Bowling Hall Management System ===",
                 "1. Register a new member",
                 "2. List all members",
                 "3. Create a new match",
@@ -43,6 +49,8 @@ namespace BowlingHallManagement.UI
             
             bool exit = false;
             
+            _logger.Log("ConsoleUI started");
+            
             while (!exit)
             {
                 Console.Clear();
@@ -53,6 +61,7 @@ namespace BowlingHallManagement.UI
                     : DisplayError("Please enter a valid number.");
             }
 
+            _logger.Log("ConsoleUI exited");
             Console.WriteLine("Thank you for using the Bowling Hall Management System!");
         }
         
@@ -82,12 +91,15 @@ namespace BowlingHallManagement.UI
             Console.Clear();
             Console.WriteLine($"=== {title} ===\n");
             
+            _logger.Log($"User selected: {title}");
+            
             try
             {
                 action();
             }
             catch (Exception ex)
             {
+                _logger.Log($"Error in {title}: {ex.Message}");
                 DisplayMessage($"Error: {ex.Message}");
             }
             
@@ -96,6 +108,7 @@ namespace BowlingHallManagement.UI
 
         private bool DisplayError(string message)
         {
+            _logger.Log($"UI Error: {message}");
             DisplayMessage(message);
             return false; // Don't exit the application
         }
@@ -116,6 +129,7 @@ namespace BowlingHallManagement.UI
                 {
                     return result;
                 }
+                _logger.Log($"Invalid input: {errorMessage}");
                 Console.WriteLine(errorMessage);
             }
         }
@@ -151,12 +165,14 @@ namespace BowlingHallManagement.UI
             string email = Console.ReadLine();
 
             _memberService.RegisterMember(name, email);
+            _logger.Log($"Member registered: {name}, {email}");
             Console.WriteLine("\nMember registered successfully!");
         }
 
         private void ListAllMembers()
         {
             var members = _memberService.GetAllMembers();
+            _logger.Log($"Listed {members.Count} members");
             DisplayList(members, "No members registered yet.");
         }
 
@@ -166,6 +182,7 @@ namespace BowlingHallManagement.UI
             
             if (members.Count < 2)
             {
+                _logger.Log("Attempted to create match with insufficient members");
                 DisplayMessage("You need at least 2 members to create a match. Please register more members.");
                 return;
             }
@@ -202,6 +219,7 @@ namespace BowlingHallManagement.UI
             
             if (!matches.Any())
             {
+                _logger.Log("Attempted to record results with no active matches");
                 DisplayMessage("No active matches found. Please create a match first.");
                 return;
             }
@@ -244,6 +262,7 @@ namespace BowlingHallManagement.UI
         private void ListAllMatches()
         {
             var matches = _matchService.GetAllMatches();
+            _logger.Log($"Listed {matches.Count} matches");
             DisplayList(matches, "No matches created yet.");
         }
 
@@ -253,6 +272,7 @@ namespace BowlingHallManagement.UI
             
             if (!matches.Any())
             {
+                _logger.Log("Attempted to simulate with no active matches");
                 DisplayMessage("No active matches found. Please create a match first.");
                 return;
             }

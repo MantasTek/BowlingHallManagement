@@ -9,9 +9,16 @@
         public Lane Lane { get; set; }
         public int ScorePlayer1 { get; set; }
         public int ScorePlayer2 { get; set; }
-        public Member? Winner { get; private set; }
-        public bool IsComplete { get; private set; }
-        public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1);// Default duration is 1 hour
+        public Member? Winner { get; set; }
+        public bool IsComplete { get; set; }
+        public TimeSpan Duration { get; set; } = TimeSpan.FromHours(1); // Default duration is 1 hour
+
+        // Default constructor for JSON serialization
+        public Match()
+        {
+            Date = DateTime.Now;
+            IsComplete = false;
+        }
 
         public Match(int id, Member player1, Member player2, Lane lane)
         {
@@ -65,4 +72,3 @@
         }
     }
 }
-    

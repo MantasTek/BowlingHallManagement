@@ -6,6 +6,13 @@
         public bool IsAvailable { get; set; }
         public DateTime? ReservedUntil { get; set; }
         
+        // Default constructor for JSON serialization
+        public Lane()
+        {
+            IsAvailable = true;
+            ReservedUntil = null;
+        }
+        
         public Lane(int laneNumber)
         {
             LaneNumber = laneNumber;
