@@ -191,59 +191,59 @@ namespace BowlingHallManagement.Services
                 {
                     var matchesJson = File.ReadAllText(_matchesFilePath);
                     var matchDtos = JsonSerializer.Deserialize<List<MatchDto>>(matchesJson) ?? new List<MatchDto>();
-                    
+            
                     Matches = new List<Match>();
                     foreach (var dto in matchDtos)
                     {
                         var player1 = GetMemberById(dto.Player1Id ?? 0);
                         var player2 = GetMemberById(dto.Player2Id ?? 0);
                         var lane = GetLaneByNumber(dto.LaneNumber ?? 0);
-                        
+                
                         if (player1 != null && player2 != null && lane != null)
                         {
-                            var match = new Match
+                            // Create a new match with the constructor
+                            var match = new Match(dto.Id, player1, player2, lane)
                             {
-                                Id = dto.Id,
-                                Player1 = player1,
-                                Player2 = player2,
-                                Lane = lane,
-                                Date = dto.Date,
-                                ScorePlayer1 = dto.ScorePlayer1,
-                                ScorePlayer2 = dto.ScorePlayer2,
-                                IsComplete = dto.IsComplete
+                                Date = dto.Date
                             };
-                            
-                            if (dto.WinnerId.HasValue)
-                            {
-                                match.Winner = GetMemberById(dto.WinnerId.Value);
-                            }
-                            
+                    
+                            // Set duration
                             if (TimeSpan.TryParse(dto.Duration, out TimeSpan duration))
                             {
                                 match.Duration = duration;
                             }
-                            
+                    
+                            // If the match is complete, record the scores which will determine the winner properly
+                            if (dto.IsComplete)
+                            {      
+                                // This will set Winner and IsComplete internally via DetermineWinner
+                                match.RecordScores(dto.ScorePlayer1, dto.ScorePlayer2);
+                            }
+                    
                             Matches.Add(match);
                         }
                     }
                 }
+            
                 else
                 {
                     Matches = new List<Match>();
                 }
-                
+        
                 Console.WriteLine("Data loaded successfully.");
             }
+                
             catch (Exception ex)
             {
                 Console.WriteLine($"Error loading data: {ex.Message}");
-                
+        
                 // Initialize with empty collections if loading fails
                 Members = new List<Member>();
                 Matches = new List<Match>();
                 Lanes = new List<Lane>();
             }
         }
+    
         
         // Helper class for serializing/deserializing matches
         private class MatchDto

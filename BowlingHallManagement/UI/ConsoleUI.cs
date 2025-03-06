@@ -269,13 +269,13 @@ namespace BowlingHallManagement.UI
         private void SimulateMatchResults()
         {
             var matches = _matchService.GetActiveMatches();
-            
+    
             if (!matches.Any())
             {
                 _logger.Log("Attempted to simulate with no active matches");
                 DisplayMessage("No active matches found. Please create a match first.");
                 return;
-            }
+            }       
 
             // List active matches
             var matchList = new List<string> { "Active Matches:" };
@@ -289,16 +289,27 @@ namespace BowlingHallManagement.UI
 
             // Simulate the match
             _matchService.SimulateMatch(matchId);
-            
+    
             // Get the updated match with simulation results
             var simulatedMatch = _matchService.GetMatchById(matchId);
-            
-            var resultMessage = new List<string> 
+    
+            // Display detailed results
+            Console.WriteLine("\nMatch Simulation Results:");
+            Console.WriteLine($"Player 1: {simulatedMatch.Player1.Name} - Score: {simulatedMatch.ScorePlayer1}");
+            Console.WriteLine($"Player 2: {simulatedMatch.Player2.Name} - Score: {simulatedMatch.ScorePlayer2}");
+            Console.WriteLine();
+    
+            if (simulatedMatch.Winner != null)
             {
-                "\nMatch simulation completed successfully!",
-                simulatedMatch.ToString()
-            };
-            PrintMenu(resultMessage);
+                Console.WriteLine($"Winner: {simulatedMatch.Winner.Name}");
+            }
+            else
+            {
+                Console.WriteLine("The match ended in a draw!");
+            }
+    
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
     }
 }
