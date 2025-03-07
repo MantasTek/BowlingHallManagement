@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using BowlingHallManagement.Models;
-using BowlingHallManagement.Services;
+﻿using BowlingHallManagement.Services;
 using BowlingHallManagement.Services.Interfaces;
 using BowlingHallManagement.Services.Logging;
 
