@@ -36,7 +36,7 @@ namespace BowlingHallManagement.Factories
             
             nextId++;
 
-              // Reserve the lane
+            // Reserve the lane
             lane.Reserve(match.Duration);
 
             return match;
