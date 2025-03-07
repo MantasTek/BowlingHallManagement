@@ -22,9 +22,22 @@ namespace BowlingHallManagement.Factories
             if (!lane.IsAvailable)
                 throw new ArgumentException("The lane you selected is ocupied");
 
-            //Creating a new Match object with random ID
-            var match = new Match(nextId, player1, player2, lane);
+            // Creating a new Match object with sequential ID
+            var match = new Match
+            {
+                Id = nextId,
+                Player1 = player1,
+                Player2 = player2,
+                Lane = lane,
+                Date = DateTime.Now,
+                IsComplete = false,
+                Duration = TimeSpan.FromHours(1)
+            };
+            
             nextId++;
+
+            // Reserve the lane
+            lane.Reserve(match.Duration);
 
             return match;
         }
